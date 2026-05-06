@@ -29,11 +29,30 @@
             background: linear-gradient(135deg, #0b3b3f, #17615c);
             color: white;
             padding: 2rem 2rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .hero-logo {
+            flex-shrink: 0;
+        }
+        .hero-logo img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            border-radius: 16px;
+            background: white;
+            padding: 8px;
+        }
+        .hero-content {
+            flex: 1;
         }
         .hero h1 {
             font-size: 1.9rem;
             font-weight: 600;
             letter-spacing: -0.3px;
+            margin-bottom: 0.5rem;
         }
         .hero-sub {
             font-size: 1rem;
@@ -201,24 +220,6 @@
         .report-btn:hover:not(:disabled) {
             background: #1e5f55;
         }
-        .dashboard-link {
-            display: inline-block;
-            background: #f8f9fa;
-            border: 2px solid #17615c;
-            border-radius: 48px;
-            padding: 0.75rem 1.5rem;
-            margin-top: 0.5rem;
-            text-align: center;
-        }
-        .dashboard-link a {
-            color: #17615c;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
-        .dashboard-link a:hover {
-            text-decoration: underline;
-        }
         .status-msg {
             margin-top: 1.2rem;
             background: #ecf9f5;
@@ -252,15 +253,27 @@
             .button-group {
                 flex-direction: column;
             }
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+            .hero-sub {
+                text-align: left;
+            }
         }
     </style>
 </head>
 <body>
 <div class="container">
     <div class="hero">
-        <h1>📋 Government Observer Questionnaire <span style="font-weight:400;">| 政府观察员问卷</span></h1>
-        <div class="hero-sub">Phase 2 · Samira's Continuation Case (Form 4 Civics with AI music pedagogy)<br>第二阶段 · Samira老师延续案例 | 基于AI音乐生成的教学法</div>
-        <div class="lang-badge">🇬🇧 English / 🇨🇳 汉语双语版 | SAFE & CONFIDENTIAL</div>
+        <div class="hero-logo">
+            <img src="SAY.png" alt="SAY Foundation Logo" onerror="this.style.display='none'">
+        </div>
+        <div class="hero-content">
+            <h1>📋 Government Observer Questionnaire <span style="font-weight:400;">| 政府观察员问卷</span></h1>
+            <div class="hero-sub">Phase 2 · Samira's Continuation Case (Form 4 Civics with AI music pedagogy)<br>第二阶段 · Samira老师延续案例 | 基于AI音乐生成的教学法</div>
+            <div class="lang-badge">🇬🇧 English / 🇨🇳 汉语双语版 | SAFE & CONFIDENTIAL</div>
+        </div>
     </div>
     <div class="form-content">
         <form id="observerForm">
@@ -415,15 +428,6 @@
                 <button type="button" id="reportBtn" class="report-btn">📊 Survey Report</button>
             </div>
             
-            <!-- Dashboard Link Section -->
-            <div class="dashboard-link">
-                <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vQBNMMa1AH9ycEWMflj8ZJioYHJBIji7s9hDmYdkStMSgIUEChR6_8qXPEbGNBjbR_wi5PEDup1h7hg/pubhtml?gid=532835516&single=true" target="_blank">
-                    📈 Click here to view the LIVE Survey Results Dashboard
-                </a>
-                <br>
-                <span style="font-size: 0.7rem; color: #6c757d;">(Opens in new tab - Updated automatically with each submission)</span>
-            </div>
-            
             <div id="submitStatus" class="status-msg">✨ Your responses are confidential. Submit to help shape education policy. ✨<br>✨ 所有数据仅用于研究，提交后可通过报告按钮查看结果。✨</div>
         </form>
     </div>
@@ -508,7 +512,6 @@
         const statusDiv = document.getElementById('submitStatus');
         const submitBtn = document.getElementById('submitToSheetBtn');
         
-        // Disable button to prevent double submission
         submitBtn.disabled = true;
         submitBtn.textContent = "⏳ Submitting... 提交中...";
         statusDiv.innerHTML = "⏳ Submitting your responses... 正在提交您的回答...";
@@ -525,7 +528,6 @@
                 submitBtn.textContent = "📤 Submit Survey";
                 document.getElementById('observerForm').reset();
                 
-                // Add success styling
                 statusDiv.classList.add('success-message');
                 setTimeout(() => {
                     statusDiv.classList.remove('success-message');
